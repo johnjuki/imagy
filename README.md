@@ -1,1 +1,0 @@
-Images from <a href="https://unsplash.com">Unsplash</a>.
