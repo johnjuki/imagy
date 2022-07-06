@@ -34,12 +34,12 @@ private val retrofit = Retrofit.Builder()
 
 interface UnsplashApiService {
     @GET("/photos/")
-    suspend fun getPhotos(): List<EditorialFeedPhotos>
-}
+    suspend fun getEditorialFeedPhotos(): List<EditorialFeedPhotos>
 
-// Public Api object that exposes the lazy-initialized Retrofit service
-object UnsplashApi {
-    val unsplashService: UnsplashApiService by lazy {
-        retrofit.create(UnsplashApiService::class.java)
+    // Return an instance of UnsplashAPIService as a singleton
+    companion object {
+        val instance: UnsplashApiService by lazy {
+            retrofit.create(UnsplashApiService::class.java)
+        }
     }
 }
