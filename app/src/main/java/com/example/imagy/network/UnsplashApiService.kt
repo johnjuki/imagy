@@ -4,6 +4,7 @@ import com.example.imagy.oauth.ACCESS_KEY
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -22,7 +23,7 @@ private val retrofit = Retrofit.Builder()
             .addInterceptor { chain ->
                 val url = chain
                     .request()
-                    .url()
+                    .url
                     .newBuilder()
                     .addQueryParameter("client_id", ACCESS_KEY)
                     .build()
@@ -33,8 +34,8 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface UnsplashApiService {
-    @GET("/photos/")
-    suspend fun getEditorialFeedPhotos(): List<EditorialFeedPhotos>
+    @GET("/photos")
+    suspend fun getEditorialFeedPhotos(): Response<List<EditorialFeedPhoto>>
 
     // Return an instance of UnsplashAPIService as a singleton
     companion object {

@@ -1,38 +1,69 @@
 package com.example.imagy
 
+import android.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import com.example.imagy.adapter.EditorialFeedRecyclerViewAdapter
+import com.example.imagy.databinding.FragmentMainBinding
+import com.example.imagy.network.UnsplashApiService
+import com.example.imagy.repository.UnsplashApiRepo
+import kotlinx.coroutines.*
 
 class MainFragment : Fragment() {
+    private lateinit var binding: FragmentMainBinding
+    private lateinit var adapter: EditorialFeedRecyclerViewAdapter
 
-    private val viewModel : MainViewModel by viewModels()
-    private lateinit var statusTextView: TextView
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+    ): View {
+        binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        statusTextView = view.findViewById(R.id.statusTextView)
+        val service = UnsplashApiService.instance
+        viewModel.unsplashApiRepo = UnsplashApiRepo(service)
 
-        // Create an observer which updates the UI
-        val photosStatusObserver = Observer<String> {
-            statusTextView.text = it
+        setUpRecyclerView()
+
+        getUnsplashPhotos()
+
+    }
+
+    private fun setUpRecyclerView() {
+        adapter = EditorialFeedRecyclerViewAdapter()
+        binding.editorialPhotosRecyclerView.adapter = adapter
+        adapter.submitList(null)
+    }
+
+    private fun getUnsplashPhotos() {
+        val errorHandler = CoroutineExceptionHandler { _, exception ->
+            AlertDialog.Builder(requireContext())
+                .setTitle("Error")
+                .setMessage(exception.message)
+                .setPositiveButton(R.string.ok) { _, _ -> }
+                .setIcon(R.drawable.ic_dialog_alert)
+                .show()
         }
 
-        // Observe the LiveData
-        viewModel.status.observe(viewLifecycleOwner, photosStatusObserver)
+        lifecycleScope.launch(errorHandler) {
+            val results = viewModel.editorialFeedPhotos()
+            withContext(Dispatchers.Main) {
+                adapter.submitList(results)
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
 }

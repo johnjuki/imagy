@@ -1,38 +1,22 @@
 package com.example.imagy
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.imagy.network.UnsplashApiService
+import com.example.imagy.network.EditorialFeedPhoto
 import com.example.imagy.repository.UnsplashApiRepo
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
+    // this is optional and initialized to null because it is expected that the caller - MainFragment -
+    // passes this object in before calling any method to fetch the images.
+    var unsplashApiRepo: UnsplashApiRepo? = null
 
-    private val _status: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
-
-    val status: LiveData<String> = _status
-
-    private val unsplashApiService = UnsplashApiService.instance
-    private val unsplashApiRepo = UnsplashApiRepo(unsplashApiService)
-
-    init {
-        getUnsplashPhotos()
-    }
-
-    private fun getUnsplashPhotos() {
-        val errorHandler = CoroutineExceptionHandler { _, exception ->
-            _status.value = "Failure: ${exception.message}"
+    suspend fun editorialFeedPhotos(): List<EditorialFeedPhoto> {
+        val editorialFeedResult = unsplashApiRepo?.getEditorialFeedPhotos()
+        if (editorialFeedResult != null && editorialFeedResult.isSuccessful) {
+            val editorialFeedPhotoList = editorialFeedResult.body()
+            if (!editorialFeedPhotoList.isNullOrEmpty()) {
+                return editorialFeedPhotoList
+            }
         }
-
-        viewModelScope.launch(errorHandler) {
-            val photosResult = unsplashApiRepo.editorialFeedPhotos()
-            _status.value = "Success: ${photosResult.size} photos received"
-        }
-
+        return emptyList()
     }
 }

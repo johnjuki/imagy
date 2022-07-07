@@ -2,7 +2,7 @@ package com.example.imagy.network
 
 import com.squareup.moshi.Json
 
-data class EditorialFeedPhotos (
+data class EditorialFeedPhoto (
     val id: String,
     @Json(name = "urls")
     val imageUrls: ImageUrls,
