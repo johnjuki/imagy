@@ -21,4 +21,17 @@
         tools:itemCount="16"
         tools:listitem="@layout/editorial_photo_view_holder"
         android:clipToPadding="false" />
+
+    <ProgressBar
+        android:id="@+id/editorialFeedProgressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

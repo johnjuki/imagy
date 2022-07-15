@@ -48,6 +48,8 @@ class MainFragment : Fragment() {
     }
 
     private fun getUnsplashPhotos() {
+        showProgressBar()
+
         val errorHandler = CoroutineExceptionHandler { _, exception ->
             AlertDialog.Builder(requireContext())
                 .setTitle("Error")
@@ -60,10 +62,19 @@ class MainFragment : Fragment() {
         lifecycleScope.launch(errorHandler) {
             val results = viewModel.editorialFeedPhotos()
             withContext(Dispatchers.Main) {
+                hideProgressBar()
                 adapter.submitList(results)
                 adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    private fun showProgressBar() {
+        binding.editorialFeedProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        binding.editorialFeedProgressBar.visibility = View.INVISIBLE
     }
 
 }
