@@ -49,6 +49,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'androidx.fragment:fragment-ktx:1.5.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
 
     // Moshi
     implementation 'com.squareup.moshi:moshi-kotlin:1.13.0'
@@ -60,7 +61,10 @@ dependencies {
     // Coil
     implementation 'io.coil-kt:coil:2.1.0'
 
-    implementation 'com.squareup.picasso:picasso:2.8'
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3'
+
 }
