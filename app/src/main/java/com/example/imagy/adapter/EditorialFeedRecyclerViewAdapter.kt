@@ -3,14 +3,15 @@ package com.example.imagy.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.bumptech.glide.Glide
 import com.example.imagy.databinding.EditorialPhotoViewHolderBinding
 import com.example.imagy.network.EditorialFeedPhoto
 
-class EditorialFeedRecyclerViewAdapter :
+class EditorialFeedRecyclerViewAdapter(private val parentFragment: Fragment) :
     ListAdapter<EditorialFeedPhoto, EditorialFeedRecyclerViewAdapter.EditorialFeedPhotoViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(
@@ -25,12 +26,15 @@ class EditorialFeedRecyclerViewAdapter :
         position: Int
     ) {
         val editorialFeedPhoto = getItem(position)
-        holder.editorialFeedPhoto.load(editorialFeedPhoto.imageUrls.regularImageUrl)
+//        holder.editorialFeedPhotoImageView.load(editorialFeedPhoto.imageUrls.regularImageUrl)
+        Glide.with(parentFragment)
+            .load(editorialFeedPhoto.imageUrls.regularImageUrl)
+            .into(holder.editorialFeedPhotoImageView)
     }
 
     class EditorialFeedPhotoViewHolder(binding: EditorialPhotoViewHolderBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            val editorialFeedPhoto: ImageView = binding.editorialFeedImageView
+            val editorialFeedPhotoImageView: ImageView = binding.editorialFeedImageView
     }
 
     companion object DiffCallback: DiffUtil.ItemCallback<EditorialFeedPhoto>() {

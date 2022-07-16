@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        adapter = EditorialFeedRecyclerViewAdapter()
+        adapter = EditorialFeedRecyclerViewAdapter(this)
         binding.editorialPhotosRecyclerView.adapter = adapter
         adapter.submitList(null)
     }
