@@ -1,6 +1,5 @@
 package com.example.imagy
 
-import android.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,7 +41,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        adapter = EditorialFeedRecyclerViewAdapter(this)
+        adapter = EditorialFeedRecyclerViewAdapter()
         binding.editorialPhotosRecyclerView.adapter = adapter
         adapter.submitList(null)
     }
@@ -54,8 +53,8 @@ class MainFragment : Fragment() {
             AlertDialog.Builder(requireContext())
                 .setTitle("Error")
                 .setMessage(exception.message)
-                .setPositiveButton(R.string.ok) { _, _ -> }
-                .setIcon(R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.ok) { _, _ -> }
+                .setIcon(android.R.drawable.ic_dialog_alert)
                 .show()
         }
 

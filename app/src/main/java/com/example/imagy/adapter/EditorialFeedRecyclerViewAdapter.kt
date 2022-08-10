@@ -7,11 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.example.imagy.databinding.EditorialPhotoViewHolderBinding
 import com.example.imagy.network.EditorialFeedPhoto
 
-class EditorialFeedRecyclerViewAdapter(private val parentFragment: Fragment) :
+class EditorialFeedRecyclerViewAdapter :
     ListAdapter<EditorialFeedPhoto, EditorialFeedRecyclerViewAdapter.EditorialFeedPhotoViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(
@@ -26,10 +26,7 @@ class EditorialFeedRecyclerViewAdapter(private val parentFragment: Fragment) :
         position: Int
     ) {
         val editorialFeedPhoto = getItem(position)
-//        holder.editorialFeedPhotoImageView.load(editorialFeedPhoto.imageUrls.regularImageUrl)
-        Glide.with(parentFragment)
-            .load(editorialFeedPhoto.imageUrls.regularImageUrl)
-            .into(holder.editorialFeedPhotoImageView)
+        holder.editorialFeedPhotoImageView.load(editorialFeedPhoto.imageUrls.regularImageUrl)
     }
 
     class EditorialFeedPhotoViewHolder(binding: EditorialPhotoViewHolderBinding) :

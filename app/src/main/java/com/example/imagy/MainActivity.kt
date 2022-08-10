@@ -11,11 +11,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<MainFragment>(R.id.fragment_main_container_view)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        supportActionBar?.hide()
+
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add<MainFragment>(R.id.fragment_main_container_view)
+        }
+
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.home_page -> {
+                    true
+                }
+                R.id.search_page -> {
+                    true
+                }
+                else -> false
             }
         }
+
     }
+
 }
