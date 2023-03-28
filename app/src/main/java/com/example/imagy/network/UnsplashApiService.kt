@@ -1,6 +1,6 @@
 package com.example.imagy.network
 
-import com.example.imagy.oauth.ACCESS_KEY
+import com.example.imagy.utils.AccessKey.ACCESS_KEY
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
