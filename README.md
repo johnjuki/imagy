@@ -6,7 +6,7 @@ Android application that displays the editorial feed photos from <a href="https:
  
  **Note:**
  - `ACCESS_KEY`. Required to fetch the images. Get yours [here](https://unsplash.com/oauth/applications).
- - This was my first ever Android application.
+ - This was the first Android application I built.
 
  
  
